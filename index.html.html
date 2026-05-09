@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nasmiya — Digital Marketer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF8F3;
+    --charcoal: #1A1A18;
+    --sage: #7A9E7E;
+    --sage-light: #EBF2EC;
+    --accent: #C8622A;
+    --muted: #6B6B65;
+    --border: #E4E0D8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(250,248,243,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--charcoal);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--charcoal); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(122,158,126,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--sage-light);
+    color: var(--sage);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+  .hero-tag::before { content: '●'; font-size: 8px; }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.35s ease forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.5s ease forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.65s ease forwards;
+  }
+  .btn-primary {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 0.85rem 2rem;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-secondary {
+    color: var(--charcoal);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.85rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    transition: border-color 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--charcoal); transform: translateY(-2px); }
+
+  /* HERO RIGHT — visual card */
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0;
+    animation: fadeIn 0.8s 0.7s ease forwards;
+  }
+  .profile-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: 320px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+    position: relative;
+  }
+  .profile-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage) 0%, var(--accent) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+  }
+  .profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+  }
+  .profile-role {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .profile-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--charcoal);
+  }
+  .stat-label { font-size: 0.75rem; color: var(--muted); }
+  .profile-badge {
+    position: absolute; top: -12px; right: 20px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 12px;
+    letter-spacing: 0.04em;
+  }
+  .skills-row {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 1.2rem;
+  }
+  .skill-pill {
+    background: var(--sage-light);
+    color: var(--sage);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 4rem; }
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted);
+    max-width: 480px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about { background: white; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .about-highlight {
+    background: var(--sage-light);
+    border-left: 3px solid var(--sage);
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 12px 12px 0;
+    font-size: 0.95rem;
+    color: var(--charcoal);
+    line-height: 1.7;
+    margin-top: 1.5rem;
+    font-style: italic;
+  }
+  .journey-steps { margin-top: 2rem; }
+  .step {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  .step-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--sage-light);
+    color: var(--sage);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-text h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.2rem; }
+  .step-text p { font-size: 0.85rem; color: var(--muted); }
+
+  /* SKILLS */
+  .skills-section { background: var(--cream); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .skill-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .skill-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .skill-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .skill-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+  .skill-bar-wrap {
+    margin-top: 1rem;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .skill-bar {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--sage);
+    transition: width 1.2s ease;
+  }
+
+  /* TOOLS */
+  .tools-section { background: var(--charcoal); }
+  .tools-section .section-label { color: var(--sage); }
+  .tools-section .section-title { color: var(--cream); }
+  .tools-section .section-sub { color: rgba(250,248,243,0.6); }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .tool-chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .tool-chip:hover { background: rgba(255,255,255,0.1); }
+  .tool-chip .tool-emoji { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .tool-chip p { color: rgba(250,248,243,0.8); font-size: 0.8rem; }
+
+  /* CONTACT */
+  .contact-section { background: white; }
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-inner .section-title { margin-bottom: 0.8rem; }
+  .contact-links {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    text-decoration: none;
+    color: var(--charcoal);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: border-color 0.2s, transform 0.15s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--charcoal); transform: translateY(-2px); background: var(--cream); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    color: rgba(250,248,243,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.82rem;
+  }
+  footer span { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; text-align: center; gap: 3rem; }
+    .hero-desc { margin: 0 auto 2rem; }
+    .hero-actions { justify-content: center; flex-wrap: wrap; }
+    .hero-visual { order: -1; }
+    section { padding: 3.5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .tools-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Nasmiya</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Available for Internship</div>
+    <h1 class="hero-title">
+      Hi, I'm Nasmiya —<br>
+      <em>Digital Marketer</em><br>
+      in the making.
+    </h1>
+    <p class="hero-desc">
+      Passionate about SEO, paid ads, and social media. I help brands grow their online presence through data-driven strategies and creative content.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get in touch</a>
+      <a href="#skills" class="btn-secondary">View my skills</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="profile-card">
+      <div class="profile-badge">Open to work</div>
+      <div class="profile-avatar">N</div>
+      <div class="profile-name">Nasmiya</div>
+      <div class="profile-role">Digital Marketing Enthusiast · Thrissur, Kerala</div>
+      <div class="skills-row">
+        <span class="skill-pill">SEO</span>
+        <span class="skill-pill">Google Ads</span>
+        <span class="skill-pill">Meta Ads</span>
+        <span class="skill-pill">GA4</span>
+        <span class="skill-pill">Content</span>
+      </div>
+      <div class="profile-stats">
+        <div class="stat">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Months trained</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Tools learned</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="section-label">About me</div>
+      <h2 class="section-title">From counseling hearts to growing brands</h2>
+      <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;margin-bottom:1rem;">
+        I spent years as an Academic Counselor — listening, guiding, and connecting with people. That experience taught me something powerful: understanding people is the heart of great marketing.
+      </p>
+      <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;">
+        Now I'm channeling that same empathy into digital marketing — learning how to reach the right audience, with the right message, at the right time.
+      </p>
+      <div class="about-highlight">
+        "Marketing is no longer about the stuff you make, but the stories you tell." — Seth Godin
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="journey-steps">
+        <div class="step">
+          <div class="step-dot">01</div>
+          <div class="step-text">
+            <h4>Academic Counselor</h4>
+            <p>Built strong communication, client handling, and empathy skills — the foundation of great marketing.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-dot">02</div>
+          <div class="step-text">
+            <h4>Digital Marketing Course</h4>
+            <p>Completed a 3-month course covering SEO, Google Ads, Social Media, Email Marketing, and Analytics.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-dot">03</div>
+          <div class="step-text">
+            <h4>Building my portfolio</h4>
+            <p>Creating mock campaigns, writing SEO content, and earning Google certifications to be internship-ready.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-dot">04</div>
+          <div class="step-text">
+            <h4>Seeking internship</h4>
+            <p>Ready to apply my skills in a real-world environment and grow into a full-stack digital marketer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label reveal">What I know</div>
+    <h2 class="section-title reveal">Core marketing skills</h2>
+    <p class="section-sub reveal">Areas I've studied and practised, with real tools and hands-on projects.</p>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#EBF2EC;">🔍</div>
+        <h3>SEO</h3>
+        <p>On-page, off-page, technical SEO, keyword research, and Google Search Console.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="75%" style="width:0%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#FEF3E8;">📢</div>
+        <h3>Google Ads (SEM)</h3>
+        <p>Search campaigns, keyword match types, Quality Score, bidding strategies, ad copywriting.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="70%" style="width:0%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#EEEDFE;">📱</div>
+        <h3>Social Media Marketing</h3>
+        <p>Meta Ads (Facebook & Instagram), content calendars, audience targeting, organic growth.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="72%" style="width:0%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#FFF0F0;">📧</div>
+        <h3>Email Marketing</h3>
+        <p>Campaign creation, segmentation, A/B testing, Mailchimp, open rates, drip campaigns.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="65%" style="width:0%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#E8F4FD;">📊</div>
+        <h3>Analytics & Reporting</h3>
+        <p>Google Analytics 4, UTM parameters, KPIs, campaign performance reports, conversion tracking.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="68%" style="width:0%"></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#EBF2EC;">✍️</div>
+        <h3>Content Marketing</h3>
+        <p>SEO blog writing, copywriting (AIDA), content strategy, Canva creatives, social captions.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="70%" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label reveal">My toolkit</div>
+    <h2 class="section-title reveal">Tools I work with</h2>
+    <p class="section-sub reveal">Platforms and tools I've set up and practised on hands-on.</p>
+
+    <div class="tools-grid">
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">🔎</div>
+        <p>Google Ads</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">📈</div>
+        <p>Google Analytics 4</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">🖥️</div>
+        <p>Search Console</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">📘</div>
+        <p>Meta Business Suite</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">🎨</div>
+        <p>Canva</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">📩</div>
+        <p>Mailchimp</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">🔗</div>
+        <p>LinkedIn</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">📅</div>
+        <p>Buffer</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">🧲</div>
+        <p>HubSpot CRM</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">🔑</div>
+        <p>Ubersuggest</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">📋</div>
+        <p>Google Sheets</p>
+      </div>
+      <div class="tool-chip reveal">
+        <div class="tool-emoji">▶️</div>
+        <p>YouTube</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-label reveal">Let's connect</div>
+    <h2 class="section-title reveal">Looking for a motivated digital marketing intern?</h2>
+    <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;" class="reveal">
+      I'm actively seeking internship opportunities in digital marketing. I'm a fast learner, hardworking, and genuinely passionate about growing brands online. Let's talk!
+    </p>
+    <div class="contact-links reveal">
+      <a href="mailto:nasmiya.digitalmarketer@gmail.com" class="contact-link">
+        📧 nasmiya.digitalmarketer@gmail.com
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-link">
+        💼 LinkedIn Profile
+      </a>
+      <a href="tel:+91" class="contact-link">
+        📞 Call me
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed with care by <span>Nasmiya</span> · Aspiring Digital Marketer · Thrissur, Kerala · 2024</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Skill bars animate when visible
+  const bars = document.querySelectorAll('.skill-bar');
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target;
+        bar.style.width = bar.dataset.width;
+        barObserver.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(bar => barObserver.observe(bar));
+</script>
+</body>
+</html>
